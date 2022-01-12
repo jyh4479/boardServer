@@ -35,6 +35,11 @@ public class MemberControllerTest {
         this.mvc.perform(requestBuilder).andExpect(status().isOk());
 
         verify(memberService).logService2();
+    }
 
+    @Test
+    @DisplayName("Create Member Test")
+    void createMemberTest() throws Exception{
+//        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/member")
     }
 }
