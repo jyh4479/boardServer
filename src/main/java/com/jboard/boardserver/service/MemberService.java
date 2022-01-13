@@ -24,6 +24,8 @@ public class MemberService {
     @Transactional(readOnly = true)
     public boolean loginTestLogic(LoginInfo loginInfo) throws Exception {
         try {
+            log.info("login Service");
+            log.info(String.valueOf(loginInfo));
             Member member = memberRepository.getById(loginInfo.getId());
             if (member.getPassword().equals(loginInfo.getPassword()))
                 return true;

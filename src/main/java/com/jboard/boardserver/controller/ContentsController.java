@@ -1,15 +1,13 @@
 package com.jboard.boardserver.controller;
 
-import com.jboard.boardserver.entity.Content;
+import com.jboard.boardserver.dto.DeleteContentInfo;
+import com.jboard.boardserver.dto.NewContentInfo;
 import com.jboard.boardserver.service.ContentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Log
 @RestController
@@ -30,13 +28,28 @@ public class ContentsController {
     }
 
     @PostMapping("/content")
-    public ResponseEntity<?> addContent(@RequestBody Content content) {
+    public ResponseEntity<?> addContent(@RequestBody NewContentInfo newContentInfo) {
         log.info("run addContent in ContentsController");
         try {
-            contentService.addContent(content);
-            return new ResponseEntity<>(null, null, HttpStatus.OK);
+            contentService.addContent(newContentInfo);
+            return new ResponseEntity<>(true, null, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(false, null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //https://yeonyeon.tistory.com/33
+    //Axios delete 메서드로 body 전달 불가 이슈 url 변경 필수
+    @PostMapping(value = "/contentDeleteTest")
+    public ResponseEntity<?> deleteContent(@RequestBody DeleteContentInfo deleteContentInfo) {
+        log.info("run deleteContent in ContentsController");
+        try {
+            if (contentService.deleteContent(deleteContentInfo)) {
+                return new ResponseEntity<>(true, null, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(false, null, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, null, HttpStatus.OK);
         }
     }
 }

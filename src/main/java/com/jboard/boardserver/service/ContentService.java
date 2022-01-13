@@ -1,5 +1,7 @@
 package com.jboard.boardserver.service;
 
+import com.jboard.boardserver.dto.DeleteContentInfo;
+import com.jboard.boardserver.dto.NewContentInfo;
 import com.jboard.boardserver.entity.Content;
 import com.jboard.boardserver.repository.ContentRepository;
 import lombok.AllArgsConstructor;
@@ -28,8 +30,28 @@ public class ContentService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void addContent(Content content) {
+    public void addContent(NewContentInfo newContentInfo) {
         log.info("run addContent in ContentService");
-        contentRepository.save(content);
+        Content newContent = new Content(
+                newContentInfo.getWriter(),
+                newContentInfo.getTitle(),
+                newContentInfo.getDetail(),
+                newContentInfo.getDate(),
+                null
+        );
+        contentRepository.save(newContent);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteContent(DeleteContentInfo deleteContentInfo) {
+        log.info("run deleteContent in ContentService");
+        log.info(String.valueOf(deleteContentInfo));
+        Content content = contentRepository.getById(deleteContentInfo.getContentNumber());
+        if (content.getWriter().equals(deleteContentInfo.getWriter())) {
+            contentRepository.delete(content);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

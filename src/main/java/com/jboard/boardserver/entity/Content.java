@@ -1,7 +1,9 @@
 package com.jboard.boardserver.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -29,8 +31,7 @@ public class Content {
     private String comment;
 
     @Builder
-    Content(Long id, String writer, String title, String detail, String date, String comment) {
-        this.id = id;
+    public Content(String writer, String title, String detail, String date, String comment) {
         this.writer = writer;
         this.title = title;
         this.detail = detail;
