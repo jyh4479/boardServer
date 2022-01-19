@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ContentCustomRepository {
+public interface ContentRepositoryCustom {
     List<Content> findByOption(SearchOption searchOption);
 }

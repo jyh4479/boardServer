@@ -2,8 +2,8 @@ package com.jboard.boardserver.service;
 
 import com.jboard.boardserver.dto.DeleteContentInfo;
 import com.jboard.boardserver.dto.NewContentInfo;
+import com.jboard.boardserver.dto.SearchOption;
 import com.jboard.boardserver.entity.Content;
-import com.jboard.boardserver.repository.content.ContentCustomRepository;
 import com.jboard.boardserver.repository.content.ContentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -26,6 +26,17 @@ public class ContentService {
             return contentRepository.findAll();
         } catch (Exception e) {
             log.warning("error getContentList in ContentService");
+            throw new Exception();
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<?> getSearchContentList(SearchOption searchOption) throws Exception {
+        log.info("run getSearchContentList in ContentService");
+        try {
+            return contentRepository.findByOption(searchOption);
+        } catch (Exception e) {
+            log.warning("error getSearchContentList in ContentService");
             throw new Exception();
         }
     }

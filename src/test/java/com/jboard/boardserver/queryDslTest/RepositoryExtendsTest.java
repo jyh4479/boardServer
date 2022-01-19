@@ -20,7 +20,7 @@ public class RepositoryExtendsTest {
 
     @Test
     public void getDataTest() {
-        SearchOption searchOption = new SearchOption(null, "jyh4479", null, null, null, null);
+        SearchOption searchOption = new SearchOption(null, "jyh4479", null, null);
 
         List<Content> contentList = contentRepository.findByOption(searchOption);
 

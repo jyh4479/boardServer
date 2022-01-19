@@ -2,6 +2,7 @@ package com.jboard.boardserver.controller;
 
 import com.jboard.boardserver.dto.DeleteContentInfo;
 import com.jboard.boardserver.dto.NewContentInfo;
+import com.jboard.boardserver.dto.SearchOption;
 import com.jboard.boardserver.service.ContentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -23,6 +24,24 @@ public class ContentsController {
             return new ResponseEntity<>(contentService.getContentList(), null, HttpStatus.OK);
         } catch (Exception e) {
             log.warning("error getContentList in ContentsController");
+            return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/searchcontentlist")
+    public ResponseEntity<?> getSearchContentList(@RequestParam(value = "id", required = false) Long id, @RequestParam(value = "title", required = false) String title, @RequestParam(value = "writer", required = false) String writer, @RequestParam(value = "date", required = false) String date) {
+        log.info("run getContentList in getSearchContentList");
+
+        log.info("check date : " + id);
+        log.info("check date : " + title);
+        log.info("check date : " + writer);
+        log.info("check date : " + date);
+
+        SearchOption searchOption = new SearchOption(id, title, writer, date);
+
+        try {
+            return new ResponseEntity<>(contentService.getSearchContentList(searchOption), null, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
