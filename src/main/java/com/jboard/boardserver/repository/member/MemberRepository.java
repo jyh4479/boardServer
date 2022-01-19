@@ -1,4 +1,4 @@
-package com.jboard.boardserver.repository;
+package com.jboard.boardserver.repository.member;
 
 import com.jboard.boardserver.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

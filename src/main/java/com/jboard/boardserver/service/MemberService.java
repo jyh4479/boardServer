@@ -2,7 +2,7 @@ package com.jboard.boardserver.service;
 
 import com.jboard.boardserver.dto.LoginInfo;
 import com.jboard.boardserver.entity.Member;
-import com.jboard.boardserver.repository.MemberRepository;
+import com.jboard.boardserver.repository.member.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
