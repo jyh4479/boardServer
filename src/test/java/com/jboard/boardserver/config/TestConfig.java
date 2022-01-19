@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 //https://jyami.tistory.com/124
+//https://insanelysimple.tistory.com/245
 @TestConfiguration
 public class TestConfig {
     @PersistenceContext
