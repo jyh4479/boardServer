@@ -27,12 +27,12 @@ public class ContentRepositoryImpl implements ContentRepositoryCustom {
 
     private BooleanExpression containTitle(String title) {
         if (title == null) return null;
-        else return QContent.content.writer.contains(title);
+        else return QContent.content.title.contains(title);
     }
 
     private BooleanExpression eqDate(String date) {
         if (date == null) return null;
-        else return QContent.content.writer.eq(date);
+        else return QContent.content.date.eq(date);
     }
 
     public List<Content> findByOption(SearchOption searchOption) {

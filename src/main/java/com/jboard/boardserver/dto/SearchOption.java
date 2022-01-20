@@ -6,15 +6,15 @@ import lombok.Data;
 @Data
 public class SearchOption {
     private Long id;
-    private String writer;
     private String title;
+    private String writer;
     private String date;
 
     @Builder
-    public SearchOption(Long id, String writer, String title, String date) {
+    public SearchOption(Long id, String title, String writer, String date) {
         this.id = id;
-        this.writer = writer;
         this.title = title;
+        this.writer = writer;
         this.date = date;
     }
 }
