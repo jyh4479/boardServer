@@ -7,6 +7,7 @@ import com.jboard.boardserver.entity.Content;
 import com.jboard.boardserver.repository.content.ContentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +21,10 @@ public class ContentService {
     private final ContentRepository contentRepository;
 
     @Transactional(readOnly = true)
-    public List<?> getContentList() throws Exception {
+    public List<?> getContentList(Pageable paging, SearchOption searchOption) throws Exception {
         log.info("run getContentList in ContentService");
         try {
-            return contentRepository.findAll();
+            return contentRepository.findByOption(paging, searchOption);
         } catch (Exception e) {
             log.warning("error getContentList in ContentService");
             throw new Exception();
@@ -31,13 +32,13 @@ public class ContentService {
     }
 
     @Transactional(readOnly = true)
-    public List<?> getSearchContentList(SearchOption searchOption) throws Exception {
-        log.info("run getSearchContentList in ContentService");
+    public Object getContentSize(SearchOption searchOption) throws Exception {
+        log.info("run getContentSize in ContentService");
         try {
-            return contentRepository.findByOption(searchOption);
+            return contentRepository.findByOptionSize(searchOption);
         } catch (Exception e) {
-            log.warning("error getSearchContentList in ContentService");
-            throw new Exception();
+            log.warning("error getContentSize in ContentService");
+            return new Exception();
         }
     }
 
