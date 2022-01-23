@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -35,16 +36,25 @@ public class ContentRepositoryImpl implements ContentRepositoryCustom {
         else return QContent.content.date.eq(date);
     }
 
-    public List<Content> findByOption(SearchOption searchOption) {
+    public List<Content> findByOption(Pageable paging, SearchOption searchOption) {
+        List<Content> result = jpaQueryFactory.selectFrom(QContent.content)
+                .where(eqId(searchOption.getId()),
+                        containTitle(searchOption.getTitle()),
+                        eqDate(searchOption.getDate()),
+                        containWriter(searchOption.getWriter()))
+                .offset(paging.getPageNumber() * paging.getPageSize())
+                .limit(paging.getPageSize())
+                .fetch();
+        return result;
+    }
 
-        log.info("run findByOption");
-        log.info("entity check : " + searchOption);
-
-        return jpaQueryFactory.selectFrom(QContent.content)
+    public Integer findByOptionSize(SearchOption searchOption) {
+        List<Content> result = jpaQueryFactory.selectFrom(QContent.content)
                 .where(eqId(searchOption.getId()),
                         containTitle(searchOption.getTitle()),
                         eqDate(searchOption.getDate()),
                         containWriter(searchOption.getWriter()))
                 .fetch();
+        return result.size();
     }
 }
