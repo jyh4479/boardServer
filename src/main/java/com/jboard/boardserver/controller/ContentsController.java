@@ -20,6 +20,16 @@ public class ContentsController {
     private final ContentService contentService;
     private final Integer PAGE_SIZE = 5;
 
+    @GetMapping("/content")
+    public ResponseEntity<?> getContent(@RequestParam Long id) {
+        log.info("run getContent in ContentsController");
+        try {
+            return new ResponseEntity<>(contentService.getContent(id), null, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/contentlist")
     public ResponseEntity<?> getContentList(@RequestParam Integer pageNumber,
                                             @RequestParam(value = "id", required = false) Long id,
@@ -30,7 +40,7 @@ public class ContentsController {
         Pageable paging = PageRequest.of(pageNumber, PAGE_SIZE);
         SearchOption searchOption = new SearchOption(id, title, writer, date);
         try {
-            return new ResponseEntity<>(contentService.getContentList(paging,searchOption), null, HttpStatus.OK);
+            return new ResponseEntity<>(contentService.getContentList(paging, searchOption), null, HttpStatus.OK);
         } catch (Exception e) {
             log.warning("error getContentList in ContentsController");
             return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);

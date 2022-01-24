@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Log
 @Service
@@ -19,6 +20,17 @@ import java.util.List;
 public class ContentService {
 
     private final ContentRepository contentRepository;
+
+    @Transactional(readOnly = true)
+    public Optional<Content> getContent(Long id) throws Exception {
+        log.info("run getContent in ContentService");
+        try {
+            return contentRepository.findById(id);
+        } catch (Exception e) {
+            log.warning("error getContent in ContentService");
+            throw new Exception();
+        }
+    }
 
     @Transactional(readOnly = true)
     public List<?> getContentList(Pageable paging, SearchOption searchOption) throws Exception {
