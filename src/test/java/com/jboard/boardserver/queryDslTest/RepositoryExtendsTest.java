@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,8 +23,9 @@ public class RepositoryExtendsTest {
     @Test
     public void getDataTest() {
         SearchOption searchOption = new SearchOption(null, "jyh4479", null, null);
+        Pageable paging = PageRequest.of(0, 5);
 
-        List<Content> contentList = contentRepository.findByOption(searchOption);
+        List<Content> contentList = contentRepository.findByOption(paging, searchOption);
 
         System.out.println(contentList);
     }

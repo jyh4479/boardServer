@@ -37,6 +37,7 @@ public class ContentRepositoryImpl implements ContentRepositoryCustom {
     }
 
     public List<Content> findByOption(Pageable paging, SearchOption searchOption) {
+        log.info("run ContentRepositoryImpl findByOption");
         List<Content> result = jpaQueryFactory.selectFrom(QContent.content)
                 .where(eqId(searchOption.getId()),
                         containTitle(searchOption.getTitle()),

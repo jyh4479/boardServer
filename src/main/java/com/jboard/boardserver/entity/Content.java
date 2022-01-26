@@ -1,12 +1,15 @@
 package com.jboard.boardserver.entity;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+//JPA 매핑 참고
+//https://lar542.github.io/JPA/2019-09-08-JPA2/
 @Data
 @Table(name = "content")
 @Entity
@@ -26,6 +29,11 @@ public class Content {
 
     @Column
     private String date;
+
+
+    @OneToMany(mappedBy = "content")
+    @JsonManagedReference
+    private List<Comment> commentList = new ArrayList<Comment>();
 
     @Column
     private String comment;
