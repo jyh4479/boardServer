@@ -75,8 +75,7 @@ public class ContentService {
         if (content.getWriter().equals(deleteContentInfo.getWriter())) {
             contentRepository.delete(content);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package com.jboard.boardserver.service;
 
+import com.jboard.boardserver.dto.DeleteContentInfo;
 import com.jboard.boardserver.dto.NewCommentInfo;
 import com.jboard.boardserver.entity.Comment;
 import com.jboard.boardserver.entity.Content;
@@ -45,5 +46,17 @@ public class CommentService {
             log.warning("error getCommentList in CommentService");
             throw new Exception();
         }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteCommentList(DeleteContentInfo deleteContentInfo) throws Exception {
+        log.info("run deleteCommentList in CommentService");
+        log.info(String.valueOf(deleteContentInfo));
+        Comment comment = commentRepository.getById(deleteContentInfo.getContentNumber());
+        if (comment.getWriter().equals(deleteContentInfo.getWriter())) {
+            commentRepository.delete(comment);
+            return true;
+        }
+        return false;
     }
 }

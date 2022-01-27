@@ -82,12 +82,11 @@ public class ContentsController {
     public ResponseEntity<?> deleteContent(@RequestBody DeleteContentInfo deleteContentInfo) {
         log.info("run deleteContent in ContentsController");
         try {
-            if (contentService.deleteContent(deleteContentInfo)) {
+            if (contentService.deleteContent(deleteContentInfo))
                 return new ResponseEntity<>(true, null, HttpStatus.OK);
-            }
             return new ResponseEntity<>(false, null, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(false, null, HttpStatus.OK);
+            return new ResponseEntity<>(false, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
